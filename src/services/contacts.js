@@ -10,7 +10,7 @@ export const getContacts = async (
   const skipPages = (page - 1) * perPage;
 
   const contactQuery = ContactsCollection.find();
-  if (filters.type) {
+  if (filters.type !== undefined) {
     contactQuery.where('contactType').equals(filters.type);
   }
   if (filters.isFavourite !== undefined) {
