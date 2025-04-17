@@ -18,3 +18,15 @@ export const authRegisterShema = Joi.object({
     'any.required': 'Enter password',
   }),
 });
+
+export const authLoginShema = Joi.object({
+  email: Joi.string().pattern(emailRegexp).required().messages({
+    'string.base': 'Email must be a string',
+    'any.required': 'Enter email',
+  }),
+  password: Joi.string().min(6).required().messages({
+    'string.base': 'Password must be a string',
+    'string.min': 'Password should have at least 6 characters',
+    'any.required': 'Enter password',
+  }),
+});
