@@ -24,6 +24,7 @@ const userShema = new Schema(
     timestamps: true,
   },
 );
+
 userShema.post('save', handleSaveError);
 
 userShema.pre('findOneAndUpdate', setUpdateSettings);

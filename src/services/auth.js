@@ -1,6 +1,12 @@
 import createHttpError from 'http-errors';
 import UsersCollection from '../db/models/user.js';
 import bcrypt from 'bcrypt';
+import SessionCollection from '../db/models/session.js';
+import { randomBytes } from 'node:crypto';
+import {
+  accessTokenLiveTime,
+  refreshTokenLiveTime,
+} from '../constants/auth.js';
 
 export const registerUser = async (payload) => {
   const { email, password } = payload;
@@ -31,9 +37,16 @@ export const loginUser = async (payload) => {
     throw createHttpError(401, 'Password is invalid.');
   }
 
-  ///
+  await SessionCollection.findOneAndDelete({ userId: user._id });
 
-  ///
+  const accessToken = randomBytes(30).toString('base64');
+  const refreshToken = randomBytes(30).toString('base64');
 
-  return await UsersCollection.create({});
+  return SessionCollection.create({
+    userId: user._id,
+    accessToken,
+    refreshToken,
+    accessTokenValidUntil: Date.now() + accessTokenLiveTime,
+    refreshTokenValidUntil: Date.now() + refreshTokenLiveTime,
+  });
 };
