@@ -50,3 +50,7 @@ export const loginUser = async (payload) => {
     refreshTokenValidUntil: Date.now() + refreshTokenLiveTime,
   });
 };
+
+export const findSession = (query) => SessionCollection.findOne(query);
+
+export const findUser = (query) => UsersCollection.findOne(query);
