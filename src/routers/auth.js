@@ -1,7 +1,11 @@
 import { Router } from 'express';
 import { authLoginShema, authRegisterShema } from '../validation/auth.js';
 import { validateBody } from '../utils/validateBody.js';
-import { loginController, registerController } from '../controllers/auth.js';
+import {
+  loginController,
+  refreshController,
+  registerController,
+} from '../controllers/auth.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
 export const authRouter = Router();
@@ -17,3 +21,5 @@ authRouter.post(
   validateBody(authLoginShema),
   ctrlWrapper(loginController),
 );
+
+authRouter.post('/refresh', ctrlWrapper(refreshController));
