@@ -7,6 +7,10 @@ import {
   accessTokenLiveTime,
   refreshTokenLiveTime,
 } from '../constants/auth.js';
+import { getEnvVar } from '../utils/getEnvVar.js';
+import { sendEmail } from '../utils/sendMail.js';
+import { SMTP } from '../constants/index.js';
+import jwt from 'jsonwebtoken';
 
 const createSession = () => {
   const accessToken = randomBytes(30).toString('base64');
@@ -92,4 +96,31 @@ export const refreshUser = async ({ refreshToken, sessionId }) => {
 
 export const logoutUser = async (sessionId) => {
   await SessionCollection.deleteOne({ _id: sessionId });
+};
+
+export const requestResetToken = async (email) => {
+  const user = await UsersCollection.findOne({ email });
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+
+  const resetToken = jwt.sign(
+    {
+      sub: user._id,
+      email,
+    },
+    getEnvVar('JWT_SECRET'),
+    {
+      expiresIn: '5m',
+    },
+  );
+
+  console.log('SMTP_FROM :', SMTP.SMTP_FROM);
+
+  await sendEmail({
+    from: getEnvVar(SMTP.SMTP_FROM),
+    to: email,
+    subject: 'Reset your password',
+    html: `<p>Click <a href="${resetToken}">here</a> to reset your password!</p>`,
+  });
 };
