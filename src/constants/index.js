@@ -12,6 +12,8 @@ export const SMTP = {
   SMTP_FROM: 'SMTP_FROM',
 };
 
+export const TEMPLATES_DIR = path.join(process.cwd(), 'src', 'templates');
+
 export const TEMP_FILE_DIR = path.join(process.cwd(), 'temp');
 export const UPLOAD_FILE_DIR = path.join(process.cwd(), 'upload');
 export const APP_DOMAIN = 'APP_DOMAIN';

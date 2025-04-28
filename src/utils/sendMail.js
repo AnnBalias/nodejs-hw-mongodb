@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
     pass: getEnvVar(SMTP.SMTP_PASSWORD),
   },
   tls: {
-    rejectUnauthorized: false, // ⬅️ Щоб уникнути self-signed errors
+    rejectUnauthorized: false,
   },
 });
 
