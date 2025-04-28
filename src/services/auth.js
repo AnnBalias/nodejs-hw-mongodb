@@ -115,8 +115,6 @@ export const requestResetToken = async (email) => {
     },
   );
 
-  console.log('SMTP_FROM :', SMTP.SMTP_FROM);
-
   await sendEmail({
     from: getEnvVar(SMTP.SMTP_FROM),
     to: email,
