@@ -7,5 +7,5 @@ export const saveFileToLocal = async (file) => {
   const newPath = path.join(UPLOAD_FILE_DIR, file.filename);
   await fs.rename(file.path, newPath);
 
-  return `${getEnvVar(APP_DOMAIN)}/upload/'${file.filename}`;
+  return `${getEnvVar(APP_DOMAIN)}/upload/${file.filename}`;
 };
