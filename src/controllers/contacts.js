@@ -10,7 +10,7 @@ import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
 import { contactsSortFields } from '../db/models/contact.js';
 import { parseContactFilterParams } from '../utils/filters/parseContactFilterParams.js';
-import { saveFileToLocal } from '../utils/saveFileToLocal.js';
+import { saveFile } from '../utils/saveFile.js';
 
 export const getContactsController = async (req, res) => {
   const paginationParams = parsePaginationParams(req.query);
@@ -53,6 +53,12 @@ export const addContactController = async (req, res) => {
   const userId = req.user._id;
   const data = await addContact({ ...req.body, userId });
 
+  let photoUrl = req.file;
+
+  if (photoUrl) {
+    photoUrl = await saveFile(req.file);
+  }
+
   res.status(201).json({
     status: 201,
     message: 'Successfully created a contact!',
@@ -85,7 +91,7 @@ export const patchContactController = async (req, res) => {
   let photoUrl = req.file;
 
   if (photoUrl) {
-    photoUrl = await saveFileToLocal(req.file);
+    photoUrl = await saveFile(req.file);
   }
 
   const result = await updateContact(
