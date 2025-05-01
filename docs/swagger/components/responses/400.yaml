@@ -1,0 +1,19 @@
+description: Required field not found
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+        - data
+      properties:
+        status:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: 'Enter contact name'
+        data:
+          type: string
+          example: 'Enter contact name'
