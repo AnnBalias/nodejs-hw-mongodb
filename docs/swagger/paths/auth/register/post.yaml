@@ -1,0 +1,100 @@
+tags:
+  - Auth
+summary: Register
+operationId: Register
+description: 'Register'
+security: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - name
+          - email
+          - password
+        properties:
+          name:
+            description: 'User name'
+            type: string
+            example: 'Valera'
+          email:
+            description: 'User email'
+            type: string
+            example: 'bublik34@example.com'
+          password:
+            description: 'User password'
+            type: string
+            example: 'vdW45F84Fv'
+responses:
+  '201':
+    description: 'registered a user'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully registered a user!
+            data:
+              type: object
+              required:
+                - name
+                - email
+              properties:
+                name:
+                  description: 'User name'
+                  type: string
+                  example: 'Valera'
+                email:
+                  description: 'User email'
+                  type: string
+                  example: 'bublik34@example.com'
+  '400':
+    description: Required field not found
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: 'Enter name'
+            data:
+              type: string
+              example: 'Enter name'
+  '409':
+    description: 'Email in use'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 409
+            message:
+              type: string
+              example: Email in use
+            data:
+              type: string
+              example: Email in use

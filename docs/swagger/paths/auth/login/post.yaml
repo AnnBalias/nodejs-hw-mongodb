@@ -1,0 +1,90 @@
+tags:
+  - Auth
+summary: Login
+operationId: Login
+description: 'Login'
+security: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+          - password
+        properties:
+          email:
+            description: 'User email'
+            type: string
+            example: 'bublik34@example.com'
+          password:
+            description: 'User password'
+            type: string
+            example: 'vdW45F84Fv'
+responses:
+  '200':
+    description: 'logged in'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully logged in an user!
+            data:
+              type: object
+              required:
+                - accessToken
+              properties:
+                accessToken:
+                  description: 'User access token'
+                  type: string
+                  example: 'Mo9DopYF2PPIRQEFigY0yqJXjXP4R7j5t5oTmCKh'
+  '400':
+    description: Required field not found
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: 'Enter password'
+            data:
+              type: string
+              example: 'Enter password'
+  '401':
+    description: User is not registered
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: 'This email is not registered or the entered data is invalid'
+            data:
+              type: string
+              example: 'This email is not registered or the entered data is invalid'
