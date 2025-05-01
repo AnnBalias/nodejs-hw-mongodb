@@ -1,0 +1,84 @@
+tags:
+  - Contacts
+summary: Update the entire contact
+operationId: putContact
+description: 'Update the entire contact or add if the id is not found'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '65ca67e7ae7f10c88b598384'
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - name
+          - phoneNumber
+        properties:
+          name:
+            description: 'Contact name'
+            type: string
+            example: 'Valera'
+          phoneNumber:
+            description: 'Contact number'
+            type: string
+            example: '+380123456789'
+          email:
+            description: 'Contact email'
+            type: string
+            example: 'bublik34@example.com'
+          isFavourite:
+            description: 'Add contact to favorites'
+            type: boolean
+            example: true
+          contactType:
+            description: 'Sselect the type of contact'
+            enum: ['personal', 'work', 'home']
+            type: string
+            example: 'home'
+          photo:
+            description: 'Link to contact photo'
+            type: string
+            format: binary
+responses:
+  '200':
+    description: Update contact
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully update contact!'
+            data:
+              type: object
+              required:
+                - _id
+                - name
+                - phoneNumber
+                - isFavourite
+                - contactType
+                - userId
+                - createdAt
+                - updatedAt
+              $ref: '../../../components/schemas/contact.yaml'
+  '201':
+    $ref: '../../../components/responses/201.yaml'
+  '400':
+    $ref: '../../../components/responses/400.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
