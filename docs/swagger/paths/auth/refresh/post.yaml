@@ -1,0 +1,20 @@
+tags:
+  - Auth
+summary: Refresh tokens
+operationId: refreshTokens
+description: 'Refresh tokens'
+security:
+  - bearerAuth: []
+parameters:
+  - in: params
+    name: refreshToken
+    schema:
+      type: string
+      example: ZukSYedaHQtZI0KqseGDKFmUSmy7baNlvj0PUQfx; sessionId=j%3A%226813d3b46102a5516ce2f1da%22
+      description: 'Token is in cookie'
+responses:
+  '201':
+    $ref: '../../components/responses/201.yaml'
+
+  '401':
+    $ref: '../../components/responses/401.yaml'
