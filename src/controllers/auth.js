@@ -1,3 +1,4 @@
+import createHttpError from 'http-errors';
 import {
   loginUser,
   logoutUser,
@@ -62,6 +63,10 @@ export const refreshController = async (req, res) => {
 
 export const logoutController = async (req, res) => {
   console.log('req.cookies', req.cookies);
+
+  if (!req.cookies.sessionId) {
+    throw createHttpError(404, 'User not found');
+  }
 
   if (req.cookies.sessionId) {
     await logoutUser(req.cookies.sessionId);
