@@ -1,7 +1,7 @@
 tags:
   - Auth
 summary: Login
-operationId: Login
+operationId: login
 description: 'Login'
 security: []
 requestBody:
