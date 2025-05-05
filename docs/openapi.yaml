@@ -35,9 +35,9 @@ paths:
   /auth/login:
     post:
       $ref: './swagger/paths/auth/login/post.yaml'
-  # /auth/refresh:
-  #   post:
-  #     $ref: "./swagger/paths/auth/refresh/post.yaml"
+  /auth/refresh:
+    post:
+      $ref: './swagger/paths/auth/refresh/post.yaml'
   /auth/logout:
     post:
       $ref: './swagger/paths/auth/logout/post.yaml'

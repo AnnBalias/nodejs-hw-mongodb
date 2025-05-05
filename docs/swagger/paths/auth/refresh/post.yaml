@@ -3,18 +3,59 @@ tags:
 summary: Refresh tokens
 operationId: refreshTokens
 description: 'Refresh tokens'
-security:
-  - bearerAuth: []
+security: []
 parameters:
-  - in: params
-    name: refreshToken
+  - in: header
+    name: Cookie
+    required: true
+    description: httpOnly refresh token cookie
     schema:
       type: string
       example: ZukSYedaHQtZI0KqseGDKFmUSmy7baNlvj0PUQfx; sessionId=j%3A%226813d3b46102a5516ce2f1da%22
       description: 'Token is in cookie'
 responses:
-  '201':
-    $ref: '../../components/responses/201.yaml'
-
+  '200':
+    description: 'Successfully refreshed'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully refreshed a session!
+            data:
+              type: object
+              required:
+                - accessToken
+              properties:
+                accessToken:
+                  type: string
+                  example: '67DZDhyl6Jh74uHzwoEBHCRxepE7FI9KZgGHJBwL'
   '401':
-    $ref: '../../components/responses/401.yaml'
+    description: Session not found
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: 'Session not found'
+            data:
+              type: string
+              example: 'Session not found'
