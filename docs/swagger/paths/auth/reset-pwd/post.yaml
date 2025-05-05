@@ -1,0 +1,97 @@
+tags:
+  - Auth
+summary: Reset password
+operationId: resetPassword
+description: 'Reset password'
+security: []
+parameters:
+  - in: query
+    name: token
+    schema:
+      type: string
+      example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODEzZDcxNjYxMDJhNTUxNmNlMmYxZTEiLCJlbWFpbCI6ImFubmJhbGlhczM0QGdtYWlsLmNvbSIsImlhdCI6MTc0NjQ0MzUzNywiZXhwIjoxNzQ2NDQ0NDM3fQ.GtuWkQa4fyPCtI2tK8uDfLBzYAqE1rBGSO8oR73_cZg'
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - password
+        properties:
+          password:
+            description: 'User password'
+            type: string
+            example: 'vdW45F84Fv'
+responses:
+  '200':
+    description: 'Password reset'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Password has been successfully reset
+            data:
+              type: object
+              example: {}
+  '400':
+    description: Required field not found
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: 'Enter token'
+            data:
+              type: string
+              example: 'Enter token'
+  '401':
+    description: jwt expired
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: 'jwt expired'
+            data:
+              type: string
+              example: 'jwt expired'
+  '404':
+    description: Route not found
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - message
+          properties:
+            message:
+              type: string
+              example: 'Route not found'

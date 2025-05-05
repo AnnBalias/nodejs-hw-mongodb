@@ -130,7 +130,7 @@ export const requestResetToken = async (email) => {
   const template = handlebars.compile(templateSource);
   const html = template({
     name: user.name,
-    link: `${getEnvVar('APP_DOMAIN')}/reset-password?token=${resetToken}`,
+    link: `${getEnvVar('APP_DOMAIN')}/reset-pwd?token=${resetToken}`,
   });
 
   try {
@@ -148,11 +148,11 @@ export const requestResetToken = async (email) => {
   }
 };
 
-export const resetPassword = async (payload) => {
+export const resetPassword = async (password, token) => {
   let entries;
 
   try {
-    entries = jwt.verify(payload.token, getEnvVar('JWT_SECRET'));
+    entries = jwt.verify(token, getEnvVar('JWT_SECRET'));
   } catch (err) {
     if (err instanceof Error) throw createHttpError(401, err.message);
     throw err;
@@ -167,7 +167,7 @@ export const resetPassword = async (payload) => {
     throw createHttpError(404, 'User not found');
   }
 
-  const encryptedPassword = await bcrypt.hash(payload.password, 10);
+  const encryptedPassword = await bcrypt.hash(password, 10);
 
   await UsersCollection.updateOne(
     { _id: user._id },
